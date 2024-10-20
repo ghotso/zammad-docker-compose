@@ -1,3 +1,5 @@
+Note!: Official Repo slightly changed for use with mos common Unraid Servers via Portainer
+
 # Welcome to Zammad
 
 Zammad is a web based open source helpdesk/ticket system with many features
