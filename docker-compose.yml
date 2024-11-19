@@ -97,7 +97,7 @@ services:
     <<: *zammad-service
     command: ["zammad-railsserver"]
     volumes:
-      - /mnt/user/appdata/zammad/config:/config
+      - /mnt/user/appdata/zammad/config/database.yml:/opt/zammad/config/database.yml:ro
 
   zammad-redis:
     image: redis:${REDIS_VERSION:-7.4.1-alpine}
