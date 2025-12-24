@@ -54,7 +54,7 @@ x-shared:
       - zammad-redis
 
 services:
-  zammad-backup:
+  backup:
     <<: *zammad-service
     command: ["zammad-backup"]
     volumes:
@@ -62,7 +62,7 @@ services:
       - /mnt/user/appdata/zammad/storage:/opt/zammad/storage:ro
     user: 0:0
 
-  zammad-elasticsearch:
+  elasticsearch:
     image: elasticsearch:${ELASTICSEARCH_VERSION:-8.19.8}
     restart: ${RESTART:-always}
     user: "1000:1000"
@@ -73,7 +73,7 @@ services:
       xpack.security.enabled: 'false'
       ES_JAVA_OPTS: ${ELASTICSEARCH_JAVA_OPTS:--Xms1g -Xmx1g}
 
-  zammad-init:
+  init:
     <<: *zammad-service
     command: ["zammad-init"]
     depends_on:
@@ -81,12 +81,12 @@ services:
     restart: on-failure
     user: 0:0
 
-  zammad-memcached:
+  memcached:
     command: memcached -m 256M
     image: memcached:${MEMCACHE_VERSION:-1.6.39-alpine}
     restart: ${RESTART:-always}
 
-  zammad-nginx:
+  nginx:
     <<: *zammad-service
     command: ["zammad-nginx"]
     expose:
@@ -96,7 +96,7 @@ services:
     depends_on:
       - zammad-railsserver
 
-  zammad-postgresql:
+  postgresql:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-zammad_production}
       POSTGRES_USER: ${POSTGRES_USER:-zammad}
@@ -106,20 +106,20 @@ services:
     volumes:
       - /mnt/user/appdata/zammad/postgresql:/var/lib/postgresql/data
 
-  zammad-railsserver:
+  railsserver:
     <<: *zammad-service
     command: ["zammad-railsserver"]
 
-  zammad-redis:
+  redis:
     image: redis:${REDIS_VERSION:-7.4.7-alpine}
     restart: ${RESTART:-always}
     volumes:
       - /mnt/user/appdata/zammad/redis:/data
 
-  zammad-scheduler:
+  scheduler:
     <<: *zammad-service
     command: ["zammad-scheduler"]
 
-  zammad-websocket:
+  websocket:
     <<: *zammad-service
     command: ["zammad-websocket"]
