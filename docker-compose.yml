@@ -49,9 +49,9 @@ x-shared:
     volumes:
       - /mnt/user/appdata/zammad/storage:/opt/zammad/storage
     depends_on:
-      - zammad-memcached
-      - zammad-postgresql
-      - zammad-redis
+      - memcached
+      - postgresql
+      - redis
 
 services:
   backup:
@@ -77,7 +77,7 @@ services:
     <<: *zammad-service
     command: ["zammad-init"]
     depends_on:
-      - zammad-postgresql
+      - postgresql
     restart: on-failure
     user: 0:0
 
@@ -94,7 +94,7 @@ services:
     ports:
       - "${NGINX_EXPOSE_PORT:-8080}:${NGINX_PORT:-8080}"
     depends_on:
-      - zammad-railsserver
+      - railsserver
 
   postgresql:
     environment:
