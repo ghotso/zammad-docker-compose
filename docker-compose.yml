@@ -3,15 +3,15 @@ version: "3.8"
 x-shared:
   zammad-service: &zammad-service
     environment: &zammad-environment
-      MEMCACHE_SERVERS: ${MEMCACHE_SERVERS:-zammad-memcached:11211}
+      MEMCACHE_SERVERS: ${MEMCACHE_SERVERS:-memcached:11211}
       POSTGRESQL_DB: ${POSTGRES_DB:-zammad_production}
-      POSTGRESQL_HOST: ${POSTGRES_HOST:-zammad-postgresql}
+      POSTGRESQL_HOST: ${POSTGRES_HOST:-postgresql}
       POSTGRESQL_USER: ${POSTGRES_USER:-zammad}
       POSTGRESQL_PASS: ${POSTGRES_PASS:-zammad}
       POSTGRESQL_PORT: ${POSTGRES_PORT:-5432}
       POSTGRESQL_OPTIONS: ${POSTGRESQL_OPTIONS:-?pool=50}
       POSTGRESQL_DB_CREATE:
-      REDIS_URL: ${REDIS_URL:-redis://zammad-redis:6379}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       S3_URL:
       BACKUP_DIR: "${BACKUP_DIR:-/var/tmp/zammad}"
       BACKUP_TIME: "${BACKUP_TIME:-03:00}"
@@ -19,14 +19,17 @@ x-shared:
       TZ: "${TZ:-Europe/Berlin}"
       AUTOWIZARD_JSON:
       AUTOWIZARD_RELATIVE_PATH:
-      ELASTICSEARCH_ENABLED:
-      ELASTICSEARCH_SCHEMA:
-      ELASTICSEARCH_HOST:
-      ELASTICSEARCH_PORT:
+
+      # ES defaults adjusted to your renamed service "elasticsearch"
+      ELASTICSEARCH_ENABLED: ${ELASTICSEARCH_ENABLED:-true}
+      ELASTICSEARCH_SCHEMA: ${ELASTICSEARCH_SCHEMA:-http}
+      ELASTICSEARCH_HOST: ${ELASTICSEARCH_HOST:-elasticsearch}
+      ELASTICSEARCH_PORT: ${ELASTICSEARCH_PORT:-9200}
       ELASTICSEARCH_USER:
       ELASTICSEARCH_PASS:
       ELASTICSEARCH_NAMESPACE:
       ELASTICSEARCH_REINDEX:
+
       NGINX_PORT:
       NGINX_CLIENT_MAX_BODY_SIZE:
       NGINX_SERVER_NAME:
